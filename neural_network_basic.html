@@ -1,0 +1,49 @@
+<pre id=messages style='font:18px normal arial'></pre>
+<script>
+
+var input = [0, 0, 1, 0];
+var weights = [0, 0, 0, 0];
+var desiredResult = 1;
+var learningRate = 0.20;
+var error;
+var trials = 6;
+var neuralNetResult;
+
+function evaluateNeuralNetwork(inputVector, weightVector) {
+	var result = 0;
+	for (var i = 0; i < inputVector.length; i++) {
+		layerValue = inputVector[i] * weightVector[i];
+		result += layerValue;
+	}
+	return (result.toFixed(2));
+}
+
+function evaluateError(desired, actual) {
+	return (desired - actual).toFixed(2);
+}
+
+function learn(inputVector, weightVector) {
+	for (var i = 0; i < weightVector.length; i++) {
+		if (inputVector[i] > 0) {
+			weights[i] = weightVector[i] + learningRate;
+		}
+	}
+}
+	
+
+
+function train(trials) {
+	for (var i = 0; i < trials; i++) {
+		my_console('<b>Step ' + i + '</b>');
+		neuralNetResult = evaluateNeuralNetwork(input, weights);
+		my_console("Neural Net Result: " + neuralNetResult + " Error: " + evaluateError(desiredResult, neuralNetResult) + " Weight Vector: " + weights);
+		learn(input, weights);
+	}
+}
+
+function my_console(log) {
+	document.getElementById('messages').innerHTML +=  log + '\n'; 
+}
+
+train(trials);
+</script>
